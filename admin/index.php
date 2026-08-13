@@ -8,6 +8,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 require_once '../includes/header.php';
 
+// Handle Deletions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['delete_jewellery'])) {
+        $id = (int)$_POST['delete_jewellery'];
+        $conn->query("DELETE FROM transactions WHERE jewellery_id = $id");
+        $conn->query("DELETE FROM jewellery WHERE id = $id");
+        echo "<script>window.location.href='index.php';</script>";
+    }
+    if (isset($_POST['delete_user'])) {
+        $id = (int)$_POST['delete_user'];
+        // Set references to NULL to avoid constraint errors if needed, or simply delete
+        $conn->query("DELETE FROM users WHERE id = $id");
+        echo "<script>window.location.href='index.php';</script>";
+    }
+}
+
 $jCount = $conn->query("SELECT count(*) as c FROM jewellery")->fetch_assoc()['c'];
 $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
 ?>
@@ -46,6 +62,7 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
                         <th>ID</th>
                         <th>Product Name</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +73,12 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
                         echo "<td>#" . $row['token_id'] . "</td>";
                         echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
                         echo "<td>" . $row['status'] . "</td>";
+                        echo "<td>
+                            <form method='POST' style='display:inline;' onsubmit='return confirm(\"Are you sure you want to delete this product?\");'>
+                                <input type='hidden' name='delete_jewellery' value='".$row['id']."'>
+                                <button type='submit' class='btn' style='background: #ff4444; color: white; padding: 5px 10px; font-size: 12px;'>Delete</button>
+                            </form>
+                        </td>";
                         echo "</tr>";
                     }
                     ?>
@@ -64,4 +87,64 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
         </div>
     </div>
 </div>
+
+<div class="grid-2" style="margin-top: 2rem;">
+    <div class="card">
+        <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Administrators</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $result = $conn->query("SELECT * FROM users WHERE role = 'admin' ORDER BY id DESC");
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Users & Manufacturers</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $result = $conn->query("SELECT * FROM users WHERE role != 'admin' ORDER BY id DESC LIMIT 10");
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                        echo "<td><span style='text-transform: capitalize;'>" . htmlspecialchars($row['role']) . "</span></td>";
+                        echo "<td>
+                            <form method='POST' style='display:inline;' onsubmit='return confirm(\"Are you sure you want to remove this user?\");'>
+                                <input type='hidden' name='delete_user' value='".$row['id']."'>
+                                <button type='submit' class='btn' style='background: #ff4444; color: white; padding: 5px 10px; font-size: 12px;'>Remove</button>
+                            </form>
+                        </td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <?php require_once '../includes/footer.php'; ?>

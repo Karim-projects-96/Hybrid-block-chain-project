@@ -32,6 +32,7 @@ $base_url = "/GitHub/Hybrid block chain project";
                 <?php else: ?>
                     <li><a href="<?php echo $base_url; ?>/user/dashboard.php">Dashboard</a></li>
                 <?php endif; ?>
+                <li><a href="<?php echo $base_url; ?>/profile.php">Profile</a></li>
                 <li><a href="<?php echo $base_url; ?>/logout.php" class="btn btn-outline">Logout</a></li>
             <?php else: ?>
                 <li><a href="<?php echo $base_url; ?>/login.php" class="btn btn-primary">Login</a></li>

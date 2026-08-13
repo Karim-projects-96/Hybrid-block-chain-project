@@ -1,4 +1,7 @@
-<?php require_once 'includes/header.php'; ?>
+<?php 
+require_once 'includes/db_connect.php';
+require_once 'includes/header.php'; 
+?>
 
 <!-- Hero Section -->
 <section class="hero">
@@ -29,6 +32,39 @@
             <h3>Trusted Transfers</h3>
             <p style="color: var(--text-muted); margin-top: 1rem;">Seamlessly transfer ownership upon sale, updating the decentralized ledger automatically.</p>
         </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section style="padding: 4rem 2rem; background-color: var(--bg-light);">
+    <h2 style="text-align: center; color: var(--primary-gold); margin-bottom: 3rem;">All Registered Jewellery</h2>
+    <div class="grid-3">
+        <?php
+        $sql = "SELECT j.*, u.name AS owner_name, u.wallet_address AS owner_address 
+                FROM jewellery j 
+                LEFT JOIN users u ON j.current_owner_id = u.id 
+                ORDER BY j.created_at DESC";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $statusColor = 'var(--text-light)';
+                if ($row['status'] === 'stolen') $statusColor = '#ff4444';
+                elseif ($row['status'] === 'in_shop' || $row['status'] === 'available') $statusColor = '#00C851';
+                elseif ($row['status'] === 'manufactured') $statusColor = '#33b5e5';
+                
+                echo '<div class="card" style="text-align: left;">';
+                echo '<h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">' . htmlspecialchars($row['product_name'] ?? 'Unnamed Product') . '</h3>';
+                echo '<p style="margin-bottom: 0.5rem;"><strong>Status:</strong> <span style="color: '.$statusColor.'; font-weight: bold; text-transform: uppercase;">' . htmlspecialchars($row['status'] ?? 'Unknown') . '</span></p>';
+                echo '<p style="margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem;"><strong>Shopkeeper / Owner:</strong> ' . (empty($row['owner_name']) ? 'Unknown' : htmlspecialchars($row['owner_name'])) . '</p>';
+                echo '<p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem; word-break: break-all;"><strong>Address (Wallet):</strong> ' . (empty($row['owner_address']) ? 'Not provided' : htmlspecialchars($row['owner_address'])) . '</p>';
+                echo '<a href="verify.php?token_id='.htmlspecialchars($row['token_id'] ?? '').'" class="btn btn-outline" style="width: 100%; text-align: center; display: inline-block;">View Details</a>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p style="text-align: center; grid-column: span 3;">No products registered yet.</p>';
+        }
+        ?>
     </div>
 </section>
 

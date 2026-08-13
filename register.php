@@ -8,12 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $conn->real_escape_string($_POST['role']);
 
+    $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
+
     // Check if email exists
     $check = $conn->query("SELECT id FROM users WHERE email = '$email'");
     if ($check->num_rows > 0) {
         $error = "Email already registered.";
     } else {
-        $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
+        $sql = "INSERT INTO users (name, email, password, role, address) VALUES ('$name', '$email', '$password', '$role', '$address')";
         if ($conn->query($sql) === TRUE) {
             $success = "Registration successful! You can now login.";
         } else {
@@ -50,6 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option value="shop">Jewellery Shop</option>
                 <option value="manufacturer">Manufacturer</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label>Address (Optional)</label>
+            <textarea name="address" class="form-control" placeholder="Enter your physical address"></textarea>
         </div>
         <button type="submit" class="btn btn-gold" style="width: 100%; margin-top: 1rem;">Register</button>
     </form>
