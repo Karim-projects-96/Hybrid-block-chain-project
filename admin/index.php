@@ -101,7 +101,7 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
                 </thead>
                 <tbody>
                     <?php
-                    $result = $conn->query("SELECT * FROM users WHERE role = 'admin' ORDER BY id DESC");
+                    $result = $conn->query("SELECT * FROM admins ORDER BY id DESC");
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['name']) . "</td>";

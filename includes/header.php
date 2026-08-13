@@ -29,10 +29,11 @@ $base_url = "/GitHub/Hybrid block chain project";
             <?php if(isset($_SESSION['user_id'])): ?>
                 <?php if($_SESSION['role'] === 'admin'): ?>
                     <li><a href="<?php echo $base_url; ?>/admin/index.php">Admin Panel</a></li>
+                    <li><a href="<?php echo $base_url; ?>/admin/profile.php">Profile</a></li>
                 <?php else: ?>
                     <li><a href="<?php echo $base_url; ?>/user/dashboard.php">Dashboard</a></li>
+                    <li><a href="<?php echo $base_url; ?>/profile.php">Profile</a></li>
                 <?php endif; ?>
-                <li><a href="<?php echo $base_url; ?>/profile.php">Profile</a></li>
                 <li><a href="<?php echo $base_url; ?>/logout.php" class="btn btn-outline">Logout</a></li>
             <?php else: ?>
                 <li><a href="<?php echo $base_url; ?>/login.php" class="btn btn-primary">Login</a></li>

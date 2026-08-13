@@ -14,11 +14,79 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
+$success = '';
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
+    $name = $conn->real_escape_string($_POST['name']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $role = $conn->real_escape_string($_POST['role']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    $check_email = $conn->query("SELECT id FROM users WHERE email = '$email'");
+    if ($check_email->num_rows > 0) {
+        $error = "Email already exists in users table.";
+    } else {
+        $check_admin_email = $conn->query("SELECT id FROM admins WHERE email = '$email'");
+        if ($check_admin_email->num_rows > 0) {
+            $error = "Email already exists in admins table.";
+        } else {
+            $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
+            if ($conn->query($sql) === TRUE) {
+                $success = "User added successfully.";
+            } else {
+                $error = "Error adding user: " . $conn->error;
+            }
+        }
+    }
+}
+
 require_once '../includes/header.php';
 ?>
 <div class="dashboard-header">
     <h2>Manage Users</h2>
 </div>
+
+<?php if($error): ?>
+    <div class="alert alert-error" style="background: #ffcccc; color: #cc0000; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+        <?php echo $error; ?>
+    </div>
+<?php endif; ?>
+<?php if($success): ?>
+    <div class="alert alert-success" style="background: #ccffcc; color: #008800; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+        <?php echo $success; ?>
+    </div>
+<?php endif; ?>
+
+<div class="card" style="margin-bottom: 2rem;">
+    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Add New User</h3>
+    <form method="POST" action="" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <input type="hidden" name="add_user" value="1">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" class="form-control" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" class="form-control" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+        </div>
+        <div class="form-group">
+            <label>Role</label>
+            <select name="role" class="form-control" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                <option value="customer">Customer</option>
+                <option value="manufacturer">Manufacturer</option>
+                <option value="shop">Shop Owner</option>
+            </select>
+        </div>
+        <div style="grid-column: 1 / -1;">
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </div>
+    </form>
+</div>
+
 <div class="card">
     <div class="table-responsive">
         <table>

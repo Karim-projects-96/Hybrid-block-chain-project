@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'manufacturer', 'shop', 'customer') NOT NULL DEFAULT 'customer',
+    role ENUM('manufacturer', 'shop', 'customer') NOT NULL DEFAULT 'customer',
     wallet_address VARCHAR(42),
     address TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -50,8 +50,19 @@ CREATE TABLE IF NOT EXISTS transactions (
     FOREIGN KEY (jewellery_id) REFERENCES jewellery(id),
     FOREIGN KEY (from_user_id) REFERENCES users(id),
     FOREIGN KEY (to_user_id) REFERENCES users(id)
+);.0
+
+-- Admins Table
+CREATE TABLE IF NOT EXISTS admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    wallet_address VARCHAR(42),
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Insert Default Admin
-INSERT INTO users (name, email, password, role) VALUES 
-('Super Admin', 'admin@admin.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'); -- password: password
+INSERT INTO admins (name, email, password) VALUES 
+('Super Admin', 'admin@admin.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); -- password: password
