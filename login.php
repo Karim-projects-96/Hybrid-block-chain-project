@@ -1,6 +1,5 @@
 <?php
 require_once 'includes/db_connect.php';
-require_once 'includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $conn->real_escape_string($_POST['email']);
@@ -42,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+require_once 'includes/header.php';
 ?>
 <div class="card" style="max-width: 400px; margin: 4rem auto;">
     <h2 style="text-align: center; color: var(--primary-gold); margin-bottom: 2rem;">Login to LuxBlock</h2>
