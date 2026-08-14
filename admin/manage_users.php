@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     $email = $conn->real_escape_string($_POST['email']);
     $role = $conn->real_escape_string($_POST['role']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
 
     $check_email = $conn->query("SELECT id FROM users WHERE email = '$email'");
     if ($check_email->num_rows > 0) {
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
         if ($check_admin_email->num_rows > 0) {
             $error = "Email already exists in admins table.";
         } else {
-            $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
+            $sql = "INSERT INTO users (name, email, password, role, address) VALUES ('$name', '$email', '$password', '$role', '$address')";
             if ($conn->query($sql) === TRUE) {
                 $success = "User added successfully.";
             } else {
@@ -80,6 +81,10 @@ require_once '../includes/header.php';
                 <option value="manufacturer">Manufacturer</option>
                 <option value="shop">Shop Owner</option>
             </select>
+        </div>
+        <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Physical Address (Optional)</label>
+            <textarea name="address" class="form-control" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;" placeholder="Enter physical address"></textarea>
         </div>
         <div style="grid-column: 1 / -1;">
             <button type="submit" class="btn btn-primary">Add User</button>
