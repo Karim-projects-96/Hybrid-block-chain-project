@@ -18,9 +18,9 @@ $error = '';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $conn->real_escape_string($_POST['name']);
-    $address = $conn->real_escape_string($_POST['address']);
-    $wallet_address = $conn->real_escape_string($_POST['wallet_address']);
+    $name = isset($_POST['name']) ? $conn->real_escape_string($_POST['name']) : '';
+    $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
+    $wallet_address = isset($_POST['wallet_address']) ? $conn->real_escape_string($_POST['wallet_address']) : '';
 
     $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address' WHERE id = $user_id";
     if ($conn->query($sql) === TRUE) {
