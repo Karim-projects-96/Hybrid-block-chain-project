@@ -36,7 +36,7 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
 <div class="dashboard-header">
     <h2>Super Admin Dashboard</h2>
 </div>
-<div class="grid-3" style="margin-bottom: 2rem;">
+<div class="grid-2" style="margin-bottom: 2rem;">
     <div class="stat-card">
         <h3>Total Assets Minted</h3>
         <div class="value"><?php echo $jCount; ?></div>
@@ -44,10 +44,6 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
     <div class="stat-card">
         <h3>Registered Users</h3>
         <div class="value"><?php echo $uCount; ?></div>
-    </div>
-    <div class="stat-card">
-        <h3>Ethereum Network</h3>
-        <div class="value" style="color: #4CAF50; font-size: 1.5rem;">Connected (MetaMask)</div>
     </div>
 </div>
 <div class="grid-2">

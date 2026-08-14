@@ -32,12 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql = "UPDATE jewellery SET current_owner_id = $new_owner_id, status = 'in_shop' WHERE token_id = $token_id";
                     if ($conn->query($sql) === TRUE) {
                         $success = "Ownership transferred to Shop successfully!";
-                        // Trigger MetaMask transaction in JS for the blockchain part
-                        echo "<script>
-                            document.addEventListener('DOMContentLoaded', () => {
-                                alert('Please sign the MetaMask transaction to record the transfer on the Blockchain.');
-                            });
-                        </script>";
+                        
                     } else {
                         $error = "Error updating ownership.";
                     }

@@ -20,14 +20,13 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = isset($_POST['name']) ? $conn->real_escape_string($_POST['name']) : '';
     $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
-    $wallet_address = isset($_POST['wallet_address']) ? $conn->real_escape_string($_POST['wallet_address']) : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
     if (!empty($password)) {
         $hashed_password = md5($password);
-        $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address', password = '$hashed_password' WHERE id = $user_id";
+        $sql = "UPDATE admins SET name = '$name', address = '$address', password = '$hashed_password' WHERE id = $user_id";
     } else {
-        $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address' WHERE id = $user_id";
+        $sql = "UPDATE admins SET name = '$name', address = '$address' WHERE id = $user_id";
     }
     if ($conn->query($sql) === TRUE) {
         $success = "Profile updated successfully!";
@@ -78,11 +77,6 @@ require_once '../includes/header.php';
             <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px;">
         </div>
 
-        <div class="form-group" style="margin-bottom: 1rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Ethereum Wallet Address</label>
-            <input type="text" name="wallet_address" class="form-control" value="<?php echo htmlspecialchars($user['wallet_address'] ?? ''); ?>" placeholder="0x..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px;">
-            <small style="color: var(--text-muted);">Used for interacting with the Smart Contract.</small>
-        </div>
 
         <div class="form-group" style="margin-bottom: 1.5rem;">
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Physical Address</label>

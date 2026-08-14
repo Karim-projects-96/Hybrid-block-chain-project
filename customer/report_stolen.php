@@ -23,11 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($conn->query($sql) === TRUE) {
             $success = "Item status updated on Database.";
             // Blockchain update
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    alert('Please sign the MetaMask transaction to update stolen status on the Blockchain.');
-                });
-            </script>";
+            
         } else {
             $error = "Error updating status.";
         }

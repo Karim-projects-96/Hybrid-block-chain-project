@@ -13,8 +13,7 @@ $base_url = "/GitHub/Hybrid block chain project";
     <title>LuxBlock - Hybrid Blockchain Jewellery</title>
     <!-- CSS -->
     <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/style.css">
-    <!-- Web3 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -38,7 +37,7 @@ $base_url = "/GitHub/Hybrid block chain project";
             <?php else: ?>
                 <li><a href="<?php echo $base_url; ?>/login.php" class="btn btn-primary">Login</a></li>
             <?php endif; ?>
-            <li><button id="connectWalletBtn" class="btn btn-gold">Connect Wallet</button></li>
+
         </ul>
     </nav>
     <main class="main-content">

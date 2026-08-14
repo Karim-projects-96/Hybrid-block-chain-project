@@ -27,12 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($conn->query($sql) === TRUE) {
         $success = "Jewellery Minted Successfully! Token ID: $token_id";
         // Here we would ideally trigger MetaMask to send a transaction in JS
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', () => {
-                alert('Please sign the MetaMask transaction to deploy to Blockchain.');
-                // Simulate smart contract call
-            });
-        </script>";
+        
     } else {
         $error = "Error: " . $conn->error;
     }
