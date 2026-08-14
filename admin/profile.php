@@ -21,8 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = isset($_POST['name']) ? $conn->real_escape_string($_POST['name']) : '';
     $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
     $wallet_address = isset($_POST['wallet_address']) ? $conn->real_escape_string($_POST['wallet_address']) : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address' WHERE id = $user_id";
+    if (!empty($password)) {
+        $hashed_password = md5($password);
+        $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address', password = '$hashed_password' WHERE id = $user_id";
+    } else {
+        $sql = "UPDATE admins SET name = '$name', address = '$address', wallet_address = '$wallet_address' WHERE id = $user_id";
+    }
     if ($conn->query($sql) === TRUE) {
         $success = "Profile updated successfully!";
         // Update session name if it's stored there
@@ -81,6 +87,11 @@ require_once '../includes/header.php';
         <div class="form-group" style="margin-bottom: 1.5rem;">
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Physical Address</label>
             <textarea name="address" class="form-control" rows="4" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; resize: vertical;"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">New Password (leave blank to keep current)</label>
+            <input type="password" name="password" class="form-control" placeholder="Enter new password" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px;">
         </div>
 
         <button type="submit" class="btn btn-gold" style="width: 100%;">Save Changes</button>

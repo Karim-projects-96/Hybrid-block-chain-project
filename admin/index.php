@@ -18,7 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (isset($_POST['delete_user'])) {
         $id = (int)$_POST['delete_user'];
-        // Set references to NULL to avoid constraint errors if needed, or simply delete
+        // Nullify references to avoid foreign key constraint errors
+        $conn->query("UPDATE jewellery SET manufacturer_id = NULL WHERE manufacturer_id = $id");
+        $conn->query("UPDATE jewellery SET current_owner_id = NULL WHERE current_owner_id = $id");
+        $conn->query("UPDATE transactions SET from_user_id = NULL WHERE from_user_id = $id");
+        $conn->query("UPDATE transactions SET to_user_id = NULL WHERE to_user_id = $id");
+        
+        // Now safely delete the user
         $conn->query("DELETE FROM users WHERE id = $id");
         echo "<script>window.location.href='index.php';</script>";
     }

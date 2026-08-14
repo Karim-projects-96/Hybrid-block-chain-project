@@ -5,7 +5,7 @@ require_once 'includes/header.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $conn->real_escape_string($_POST['name']);
     $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = md5($_POST['password']);
     $role = $conn->real_escape_string($_POST['role']);
 
     $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';

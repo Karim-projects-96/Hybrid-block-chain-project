@@ -65,4 +65,4 @@ CREATE TABLE IF NOT EXISTS admins (
 
 -- Insert Default Admin
 INSERT INTO admins (name, email, password) VALUES 
-('Super Admin', 'admin@admin.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); -- password: password
+('Super Admin', 'pathankarim952@gmail.com', '45eb49d35d0a268c460141784c7684a3'); -- password: Karim@9699

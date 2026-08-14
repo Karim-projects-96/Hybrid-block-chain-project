@@ -9,6 +9,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
+    
+    // Nullify references to avoid foreign key constraint errors
+    $conn->query("UPDATE jewellery SET manufacturer_id = NULL WHERE manufacturer_id = $id");
+    $conn->query("UPDATE jewellery SET current_owner_id = NULL WHERE current_owner_id = $id");
+    $conn->query("UPDATE transactions SET from_user_id = NULL WHERE from_user_id = $id");
+    $conn->query("UPDATE transactions SET to_user_id = NULL WHERE to_user_id = $id");
+
     $conn->query("DELETE FROM users WHERE id = $id AND role != 'admin'");
     header("Location: manage_users.php");
     exit();
@@ -20,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     $name = $conn->real_escape_string($_POST['name']);
     $email = $conn->real_escape_string($_POST['email']);
     $role = $conn->real_escape_string($_POST['role']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = md5($_POST['password']);
     $address = isset($_POST['address']) ? $conn->real_escape_string($_POST['address']) : '';
 
     $check_email = $conn->query("SELECT id FROM users WHERE email = '$email'");
