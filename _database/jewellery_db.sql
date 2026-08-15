@@ -66,3 +66,16 @@ CREATE TABLE IF NOT EXISTS admins (
 -- Insert Default Admin
 INSERT INTO admins (name, email, password) VALUES 
 ('Super Admin', 'pathankarim952@gmail.com', '45eb49d35d0a268c460141784c7684a3'); -- password: Karim@9699
+
+-- Reports Table
+CREATE TABLE IF NOT EXISTS reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    shop_id INT,
+    subject VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    status ENUM('pending', 'resolved') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES users(id),
+    FOREIGN KEY (shop_id) REFERENCES users(id)
+);

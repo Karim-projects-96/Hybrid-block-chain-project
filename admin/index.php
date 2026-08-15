@@ -53,6 +53,7 @@ $uCount = $conn->query("SELECT count(*) as c FROM users")->fetch_assoc()['c'];
             <li style="margin-bottom: 1rem;"><a href="add_jewellery.php" class="btn btn-primary" style="width: 100%; text-align: center;">Mint New Jewellery</a></li>
             <li style="margin-bottom: 1rem;"><a href="manage_users.php" class="btn btn-outline" style="width: 100%; text-align: center;">Manage Users</a></li>
             <li style="margin-bottom: 1rem;"><a href="generate_qr.php" class="btn btn-outline" style="width: 100%; text-align: center;">QR Generator Tool</a></li>
+            <li style="margin-bottom: 1rem;"><a href="view_reports.php" class="btn btn-outline" style="width: 100%; text-align: center;">View Customer Reports</a></li>
         </ul>
     </div>
     <div class="card">

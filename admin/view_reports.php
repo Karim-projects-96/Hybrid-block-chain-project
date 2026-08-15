@@ -1,0 +1,94 @@
+<?php
+$base_url = "/GitHub/Hybrid block chain project";
+require_once '../includes/db_connect.php';
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+    exit();
+}
+
+$success = '';
+
+// Handle status update
+if (isset($_GET['resolve_id'])) {
+    $resolve_id = intval($_GET['resolve_id']);
+    $stmt = $conn->prepare("UPDATE reports SET status = 'resolved' WHERE id = ?");
+    $stmt->bind_param("i", $resolve_id);
+    if ($stmt->execute()) {
+        $success = "Report marked as resolved.";
+    }
+    $stmt->close();
+}
+
+require_once '../includes/header.php';
+?>
+
+<div class="dashboard-header">
+    <h2>Customer Reports</h2>
+</div>
+
+<?php if($success): ?>
+    <div class="alert alert-success" style="color: green; margin-bottom: 1rem; text-align: center;"><?php echo $success; ?></div>
+<?php endif; ?>
+
+<div class="card" style="margin-bottom: 2rem;">
+    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Submitted Reports</h3>
+    <div class="table-responsive">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Report ID</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Customer</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Shop</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Subject</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Description</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Date</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Status</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $query = "SELECT r.id, r.subject, r.description, r.status, r.created_at, 
+                                 c.name as customer_name, s.name as shop_name 
+                          FROM reports r 
+                          JOIN users c ON r.customer_id = c.id 
+                          JOIN users s ON r.shop_id = s.id 
+                          ORDER BY r.created_at DESC";
+                $result = $conn->query($query);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>#" . $row['id'] . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['customer_name']) . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['shop_name']) . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['subject']) . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); max-width: 250px; overflow: hidden; text-overflow: ellipsis;'>" . htmlspecialchars($row['description']) . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . date('Y-m-d H:i', strtotime($row['created_at'])) . "</td>";
+                        
+                        $status_color = $row['status'] == 'resolved' ? '#d4edda' : '#fff3cd';
+                        $status_text_color = $row['status'] == 'resolved' ? '#155724' : '#856404';
+                        
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'><span style='padding: 0.3rem 0.6rem; border-radius: 4px; background: {$status_color}; color: {$status_text_color};'>" . ucfirst($row['status']) . "</span></td>";
+                        
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>";
+                        if ($row['status'] == 'pending') {
+                            echo "<a href='view_reports.php?resolve_id=" . $row['id'] . "' class='btn btn-outline' style='padding: 0.3rem 0.6rem; font-size: 0.8rem;' onclick='return confirm(\"Mark as resolved?\")'>Resolve</a>";
+                        } else {
+                            echo "-";
+                        }
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8' style='padding: 1rem; text-align: center;'>No reports found.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>
