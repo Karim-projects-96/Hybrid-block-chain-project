@@ -30,6 +30,7 @@ $jCount = $conn->query("SELECT count(*) as c FROM jewellery WHERE manufacturer_i
         <ul style="list-style: none;">
             <li style="margin-bottom: 1rem;"><a href="add_jewellery.php" class="btn btn-primary" style="width: 100%; text-align: center;">Mint New Jewellery</a></li>
             <li style="margin-bottom: 1rem;"><a href="transfer_ownership.php" class="btn btn-outline" style="width: 100%; text-align: center;">Transfer to Shopkeeper</a></li>
+            <li style="margin-bottom: 1rem;"><a href="view_reports.php" class="btn btn-outline" style="width: 100%; text-align: center;">View Reports Against Me</a></li>
         </ul>
     </div>
     <div class="card">
