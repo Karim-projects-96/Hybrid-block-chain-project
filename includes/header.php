@@ -12,7 +12,7 @@ $base_url = "/GitHub/Hybrid block chain project";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LuxBlock - Hybrid Blockchain Jewellery</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/style.css?v=<?php echo time(); ?>">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
