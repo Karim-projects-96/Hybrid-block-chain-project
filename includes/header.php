@@ -35,7 +35,15 @@ $base_url = "/GitHub/Hybrid block chain project";
                 <?php endif; ?>
                 <li><a href="<?php echo $base_url; ?>/logout.php" class="btn btn-outline">Logout</a></li>
             <?php else: ?>
-                <li><a href="<?php echo $base_url; ?>/login.php" class="btn btn-primary">Login</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="btn btn-primary" style="padding: 0.6rem 1.5rem; display: inline-block;">Login ▼</a>
+                    <div class="dropdown-content">
+                        <a href="<?php echo $base_url; ?>/login.php?role=customer">Customer Login</a>
+                        <a href="<?php echo $base_url; ?>/login.php?role=shop">Shop Login</a>
+                        <a href="<?php echo $base_url; ?>/login.php?role=manufacturer">Manufacturer Login</a>
+                        <a href="<?php echo $base_url; ?>/login.php?role=admin">Admin Login</a>
+                    </div>
+                </li>
             <?php endif; ?>
 
         </ul>

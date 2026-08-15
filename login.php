@@ -47,8 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once 'includes/header.php';
 ?>
+<?php 
+$role_title = "";
+if (isset($_GET['role'])) {
+    $role_title = " - " . ucfirst(htmlspecialchars($_GET['role']));
+}
+?>
 <div class="card" style="max-width: 400px; margin: 4rem auto;">
-    <h2 style="text-align: center; color: var(--primary-gold); margin-bottom: 2rem;">Login to LuxBlock</h2>
+    <h2 style="text-align: center; color: var(--primary-gold); margin-bottom: 2rem;">Login to LuxBlock<?php echo $role_title; ?></h2>
     <?php if(isset($error)): ?>
         <div class="alert alert-error"><?php echo $error; ?></div>
     <?php endif; ?>

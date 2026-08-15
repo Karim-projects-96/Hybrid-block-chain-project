@@ -31,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Update ownership and status
                     $sql = "UPDATE jewellery SET current_owner_id = $new_owner_id, status = 'in_shop' WHERE token_id = $token_id";
                     if ($conn->query($sql) === TRUE) {
+                        $tx_hash = md5($token_id . $user_id . $new_owner_id . time());
+                        $get_j = $conn->query("SELECT id FROM jewellery WHERE token_id = $token_id")->fetch_assoc();
+                        $jid = $get_j['id'];
+                        $conn->query("INSERT INTO transactions (jewellery_id, from_user_id, to_user_id, tx_hash) VALUES ($jid, $user_id, $new_owner_id, '$tx_hash')");
                         $success = "Ownership transferred to Shop successfully!";
                         
                     } else {
