@@ -39,8 +39,8 @@ require_once '../includes/header.php';
             <thead>
                 <tr>
                     <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Report ID</th>
-                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Customer</th>
-                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Shop</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Reporter</th>
+                    <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Reported Party</th>
                     <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Subject</th>
                     <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Description</th>
                     <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Date</th>
@@ -51,7 +51,8 @@ require_once '../includes/header.php';
             <tbody>
                 <?php
                 $query = "SELECT r.id, r.subject, r.description, r.status, r.created_at, 
-                                 c.name as customer_name, s.name as shop_name 
+                                 c.name as reporter_name, c.role as reporter_role,
+                                 s.name as reported_name, s.role as reported_role
                           FROM reports r 
                           JOIN users c ON r.customer_id = c.id 
                           JOIN users s ON r.shop_id = s.id 
@@ -62,8 +63,8 @@ require_once '../includes/header.php';
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>#" . $row['id'] . "</td>";
-                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['customer_name']) . "</td>";
-                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['shop_name']) . "</td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['reporter_name']) . " <br><small style='color: var(--primary-gold);'>(" . ucfirst($row['reporter_role']) . ")</small></td>";
+                        echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['reported_name']) . " <br><small style='color: var(--primary-gold);'>(" . ucfirst($row['reported_role']) . ")</small></td>";
                         echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . htmlspecialchars($row['subject']) . "</td>";
                         echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); max-width: 250px; overflow: hidden; text-overflow: ellipsis;'>" . htmlspecialchars($row['description']) . "</td>";
                         echo "<td style='padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);'>" . date('Y-m-d H:i', strtotime($row['created_at'])) . "</td>";

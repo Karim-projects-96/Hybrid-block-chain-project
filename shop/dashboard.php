@@ -26,10 +26,11 @@ $jCount = $conn->query("SELECT count(*) as c FROM jewellery WHERE current_owner_
 </div>
 <div class="grid-2">
     <div class="card">
-        <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Shop Actions</h3>
+        <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Asset Management</h3>
         <ul style="list-style: none;">
             <li style="margin-bottom: 1rem;"><a href="generate_qr.php" class="btn btn-primary" style="width: 100%; text-align: center;">Generate QR Codes</a></li>
             <li style="margin-bottom: 1rem;"><a href="transfer_ownership.php" class="btn btn-outline" style="width: 100%; text-align: center;">Sell to Customer</a></li>
+            <li style="margin-bottom: 1rem;"><a href="report_manufacturer.php" class="btn btn-outline" style="width: 100%; text-align: center;">Report Manufacturer</a></li>
         </ul>
     </div>
     <div class="card">
