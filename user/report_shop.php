@@ -48,7 +48,7 @@ require_once '../includes/header.php';
     <form method="POST" action="">
         <div class="form-group" style="margin-bottom: 1rem;">
             <label for="shop_id" style="display: block; margin-bottom: 0.5rem; color: #a0a0a0;">Select Shop</label>
-            <select name="shop_id" id="shop_id" class="form-control" style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); border-radius: 8px;" required>
+            <select name="shop_id" id="shop_id" class="form-control" required>
                 <option value="">-- Select a Shop --</option>
                 <?php
                 $result = $conn->query("SELECT id, name FROM users WHERE role = 'shop' ORDER BY name ASC");
@@ -61,12 +61,12 @@ require_once '../includes/header.php';
         
         <div class="form-group" style="margin-bottom: 1rem;">
             <label for="subject" style="display: block; margin-bottom: 0.5rem; color: #a0a0a0;">Subject</label>
-            <input type="text" name="subject" id="subject" class="form-control" style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); border-radius: 8px;" required>
+            <input type="text" name="subject" id="subject" class="form-control" required>
         </div>
 
         <div class="form-group" style="margin-bottom: 1.5rem;">
             <label for="description" style="display: block; margin-bottom: 0.5rem; color: #a0a0a0;">Description</label>
-            <textarea name="description" id="description" rows="5" class="form-control" style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); border-radius: 8px;" required></textarea>
+            <textarea name="description" id="description" rows="5" class="form-control" required></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; border: none; border-radius: 8px; cursor: pointer;">Submit Report</button>
