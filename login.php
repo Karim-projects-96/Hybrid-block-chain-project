@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start(); 
 }
 require_once 'includes/db_connect.php';
+require_once 'includes/logger.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $conn->real_escape_string($_POST['email']);
@@ -15,10 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $admin['id'];
             $_SESSION['role'] = 'admin';
             $_SESSION['name'] = $admin['name'];
+            log_action($conn, $admin['id'], 'admin', 'login', 'Admin logged in successfully');
             header("Location: admin/index.php");
             exit();
         } else {
             $error = "Invalid password.";
+            log_action($conn, $admin['id'], 'admin', 'failed_login', 'Invalid password attempt for admin');
         }
     } else {
         $result = $conn->query("SELECT * FROM users WHERE email = '$email'");
@@ -28,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['name'] = $user['name'];
+                log_action($conn, $user['id'], $user['role'], 'login', ucfirst($user['role']) . ' logged in successfully');
                 if ($user['role'] == 'manufacturer') {
                     header("Location: manufacturer/dashboard.php");
                 } elseif ($user['role'] == 'shop') {
@@ -38,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             } else {
                 $error = "Invalid password.";
+                log_action($conn, $user['id'], $user['role'], 'failed_login', 'Invalid password attempt');
             }
         } else {
             $error = "User not found.";
+            log_action($conn, null, 'system', 'failed_login', "User not found: $email");
         }
     }
 }

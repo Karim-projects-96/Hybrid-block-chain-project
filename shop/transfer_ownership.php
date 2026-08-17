@@ -1,6 +1,7 @@
 <?php
 $base_url = "/GitHub/Hybrid block chain project";
 require_once '../includes/db_connect.php';
+require_once '../includes/logger.php';
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'shop') {
     header("Location: ../login.php");
@@ -34,10 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tx_hash = md5($token_id . $user_id . $new_owner_id . time());
                         $jid = $item['id'];
                         $conn->query("INSERT INTO transactions (jewellery_id, from_user_id, to_user_id, tx_hash) VALUES ($jid, $user_id, $new_owner_id, '$tx_hash')");
+                        log_action($conn, $user_id, 'shop', 'transfer_jewellery', "Sold jewellery (Token ID: $token_id) to customer (ID: $new_owner_id)");
                         $success = "Jewellery sold to Customer successfully!";
                         
                     } else {
                         $error = "Error updating ownership.";
+                        log_action($conn, $user_id, 'shop', 'failed_transfer', "Error updating ownership for token ID $token_id: " . $conn->error);
                     }
                 } else {
                     $error = "The recipient must be a registered Customer.";

@@ -1,6 +1,7 @@
 <?php
 $base_url = "/GitHub/Hybrid block chain project";
 require_once '../includes/db_connect.php';
+require_once '../includes/logger.php';
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'manufacturer') {
     header("Location: ../login.php");
@@ -42,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES ($token_id, '$name', '$category', $weight, '$purity', $manufacturer_id, $manufacturer_id, 'manufactured', '$hash', '$qr_code', '$image_url')";
                 
         if ($conn->query($sql) === TRUE) {
+            $jewellery_id = $conn->insert_id;
+            log_action($conn, $user_id, 'manufacturer', 'mint_jewellery', "Minted new jewellery: $name (Token ID: $token_id)");
             $success = "Jewellery Minted Successfully! Token ID: $token_id";
             // Here we would ideally trigger MetaMask to send a transaction in JS
             

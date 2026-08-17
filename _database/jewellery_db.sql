@@ -79,3 +79,14 @@ CREATE TABLE IF NOT EXISTS reports (
     FOREIGN KEY (customer_id) REFERENCES users(id),
     FOREIGN KEY (shop_id) REFERENCES users(id)
 );
+
+-- Activity Logs Table (For Automated Off-Chain Logging)
+CREATE TABLE IF NOT EXISTS activity_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    role VARCHAR(50) DEFAULT 'system',
+    action VARCHAR(100) NOT NULL,
+    description TEXT,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

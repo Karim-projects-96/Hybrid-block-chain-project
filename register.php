@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/db_connect.php';
+require_once 'includes/logger.php';
 require_once 'includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -17,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $sql = "INSERT INTO users (name, email, password, role, address) VALUES ('$name', '$email', '$password', '$role', '$address')";
         if ($conn->query($sql) === TRUE) {
+            $new_user_id = $conn->insert_id;
+            log_action($conn, $new_user_id, $role, 'register', "New user registered as $role");
             $success = "Registration successful! You can now login.";
         } else {
             $error = "Error: " . $conn->error;
