@@ -1,5 +1,16 @@
 <?php 
 require_once 'includes/db_connect.php';
+
+// Fetch statistics
+$assetsQuery = $conn->query("SELECT COUNT(*) AS total FROM jewellery");
+$assetsCount = $assetsQuery ? $assetsQuery->fetch_assoc()['total'] : 0;
+
+$shopsQuery = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'shop'");
+$shopsCount = $shopsQuery ? $shopsQuery->fetch_assoc()['total'] : 0;
+
+$manufacturersQuery = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'manufacturer'");
+$manufacturersCount = $manufacturersQuery ? $manufacturersQuery->fetch_assoc()['total'] : 0;
+
 require_once 'includes/header.php'; 
 ?>
 
@@ -72,15 +83,15 @@ require_once 'includes/header.php';
 <section style="background-color: var(--bg-black); padding: 4rem 2rem; border-radius: var(--border-radius); color: var(--text-light); text-align: center;">
     <div class="grid-4">
         <div>
-            <h2 style="color: var(--primary-gold); font-size: 2.5rem;">10,000+</h2>
+            <h2 style="color: var(--primary-gold); font-size: 2.5rem;"><?php echo number_format($assetsCount); ?>+</h2>
             <p>Assets Minted</p>
         </div>
         <div>
-            <h2 style="color: var(--primary-gold); font-size: 2.5rem;">500+</h2>
+            <h2 style="color: var(--primary-gold); font-size: 2.5rem;"><?php echo number_format($shopsCount); ?>+</h2>
             <p>Partner Shops</p>
         </div>
         <div>
-            <h2 style="color: var(--primary-gold); font-size: 2.5rem;">50+</h2>
+            <h2 style="color: var(--primary-gold); font-size: 2.5rem;"><?php echo number_format($manufacturersCount); ?>+</h2>
             <p>Manufacturers</p>
         </div>
         <div>
