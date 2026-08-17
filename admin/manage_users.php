@@ -90,8 +90,8 @@ require_once '../includes/header.php';
             </select>
         </div>
         <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Physical Address (Optional)</label>
-            <textarea name="address" class="form-control" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;" placeholder="Enter physical address"></textarea>
+            <label>Physical Address (Required)</label>
+            <textarea name="address" class="form-control" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;" placeholder="Enter physical address" required></textarea>
         </div>
         <div style="grid-column: 1 / -1;">
             <button type="submit" class="btn btn-primary">Add User</button>

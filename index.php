@@ -20,7 +20,7 @@ require_once 'includes/header.php';
     <p>Immutable, transparent, and secure authenticity tracking powered by Ethereum Blockchain.</p>
     <div style="margin-top: 2rem;">
         <a href="verify.php" class="btn btn-gold" style="margin-right: 1rem;">Verify Authenticity</a>
-        <a href="register.php" class="btn btn-outline">Join as Partner</a>
+        <a href="register.php" class="btn btn-outline">Register</a>
     </div>
 </section>
 

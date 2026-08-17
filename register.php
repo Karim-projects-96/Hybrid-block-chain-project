@@ -57,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </select>
         </div>
         <div class="form-group">
-            <label>Address (Optional)</label>
-            <textarea name="address" class="form-control" placeholder="Enter your physical address"></textarea>
+            <label>Address (Required)</label>
+            <textarea name="address" class="form-control" placeholder="Enter your physical address" required></textarea>
         </div>
         <button type="submit" class="btn btn-gold" style="width: 100%; margin-top: 1rem;">Register</button>
     </form>
