@@ -65,6 +65,11 @@ require_once 'includes/header.php';
                 elseif ($row['status'] === 'manufactured') $statusColor = '#33b5e5';
                 
                 echo '<div class="card" style="text-align: left;">';
+                if (!empty($row['image_url'])) {
+                    echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="Jewellery" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">';
+                } else {
+                    echo '<div style="width: 100%; height: 200px; background: #eee; border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">No Image Available</div>';
+                }
                 echo '<h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">' . htmlspecialchars($row['product_name'] ?? 'Unnamed Product') . '</h3>';
                 echo '<p style="margin-bottom: 0.5rem;"><strong>Status:</strong> <span style="color: '.$statusColor.'; font-weight: bold; text-transform: uppercase;">' . htmlspecialchars($row['status'] ?? 'Unknown') . '</span></p>';
                 echo '<p style="margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem;"><strong>Shopkeeper / Owner:</strong> ' . (empty($row['owner_name']) ? 'Unknown' : htmlspecialchars($row['owner_name'])) . '</p>';
