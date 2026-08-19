@@ -17,3 +17,4 @@
     <script src="<?php echo isset($base_url) ? $base_url : '/GitHub/Hybrid block chain project'; ?>/assets/js/main.js"></script>
 </body>
 </html>
+
