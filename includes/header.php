@@ -25,6 +25,7 @@ $base_url = "/GitHub/Hybrid block chain project";
         <ul class="nav-links">
             <li><a href="<?php echo $base_url; ?>/index.php">Home</a></li>
             <li><a href="<?php echo $base_url; ?>/verify.php">Verify Authenticity</a></li>
+            <li><a href="<?php echo $base_url; ?>/documentation.php">Documentation</a></li>
             <?php if(isset($_SESSION['user_id'])): ?>
                 <?php if($_SESSION['role'] === 'admin'): ?>
                     <li><a href="<?php echo $base_url; ?>/admin/index.php">Admin Panel</a></li>

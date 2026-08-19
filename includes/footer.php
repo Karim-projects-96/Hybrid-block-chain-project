@@ -13,6 +13,7 @@
     <script>
         const BASE_URL = "<?php echo isset($base_url) ? $base_url : '/GitHub/Hybrid block chain project'; ?>";
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@4.2.2/dist/web3.min.js"></script>
     <script src="<?php echo isset($base_url) ? $base_url : '/GitHub/Hybrid block chain project'; ?>/assets/js/main.js"></script>
 </body>
 </html>
