@@ -11,10 +11,12 @@
 
     <!-- Main JS -->
     <?php
-    $doc_root = str_replace('\', '/', $_SERVER['DOCUMENT_ROOT']);
-    $project_root = str_replace('\', '/', dirname(__DIR__));
-    $base_url = str_replace($doc_root, '', $project_root);
-    if (php_sapi_name() == 'cli-server') { $base_url = ""; }
+    $script_path = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
+    $root_path = str_replace('\\', '/', dirname(__DIR__));
+    $relative_path = str_replace($root_path, '', $script_path);
+    $depth = substr_count(trim($relative_path, '/'), '/');
+    $base_url = $depth > 0 ? str_repeat('../', $depth) : '.';
+    $base_url = rtrim($base_url, '/');
     ?>
     <script>
         const BASE_URL = "<?php echo $base_url; ?>";
