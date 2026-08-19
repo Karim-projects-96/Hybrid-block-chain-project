@@ -3,7 +3,7 @@ $host = "127.0.0.1";
 $username = "root";
 $password = ""; // Default XAMPP password
 $dbname = "jewellery_db";
-$port = 3306;
+$port = 3307;
 
 $conn = new mysqli($host, $username, $password, $dbname, $port);
 
@@ -12,3 +12,4 @@ if ($conn->connect_error) {
 }
 ?>
      
+
