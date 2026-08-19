@@ -1,18 +1,32 @@
 {
-  "name": "hybrid-blockchain-jewellery",
+  "name": "jewellery_blockchain_project",
   "version": "1.0.0",
-  "description": "Smart contracts for the PHP Hybrid Blockchain system",
+  "description": "Hybrid Blockchain Based Jewellery Management System",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "hardhat test",
-    "compile": "hardhat compile",
-    "node": "hardhat node",
-    "deploy": "hardhat run scripts/deploy.js --network localhost"
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "test": "npx hardhat test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.8.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "web3": "^4.2.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
-    "hardhat": "^2.22.0"
-  },
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0"
+    "chai": "^4.5.0",
+    "hardhat": "^2.19.0",
+    "mocha": "^11.8.0",
+    "mongodb-memory-server": "^11.2.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^7.2.2"
   }
 }

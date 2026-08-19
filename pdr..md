@@ -22,7 +22,7 @@ Frontend
 html,css,js 
 
 Backend
-php , sql 
+php , python
 
 Database
 - PostgreSQL
@@ -676,41 +676,33 @@ Production Ready Code
 
 ```text
 jewellery_blockchain_project/
-│
-├── _database/
-│   └── jewellery_db.sql          # The SQL file to import into phpMyAdmin
-│
-├── _smart_contracts/
-│   └── Tracker.sol               # The Solidity contract for the blockchain
-│
-├── assets/
-│   ├── css/
-│   │   └── style.css             # UI styling
-│   ├── js/
-│   │   ├── main.js               # Standard frontend logic
-│   │   └── web3_integration.js   # JavaScript to connect MetaMask and Blockchain
-│   └── images/
-│       └── uploads/              # Directory for uploaded jewellery photos
-│
-├── includes/
-│   ├── db_connect.php            # SQL database connection script
-│   ├── header.php                # Reusable navigation bar
-│   └── footer.php                # Reusable footer
-│
-├── admin/
-│   ├── index.php                 # Admin dashboard
-│   ├── add_jewellery.php         # PHP form to insert data to SQL and Blockchain
-│   ├── generate_qr.php           # Script to create QR codes
-│   └── manage_users.php          # SQL CRUD operations for user accounts
-│
-├── user/
-│   ├── dashboard.php             # Customer panel to view owned items
-│   ├── transfer_ownership.php    # Interface to sell/transfer item to another user
-│   └── report_stolen.php         # Interface to flag items on the blockchain
-│
-├── index.php                     # Main public landing page
-├── login.php                     # Standard SQL user authentication
-├── register.php                  # User registration
-└── verify.php                    # Public page to scan QR/Enter ID and check authenticity
-
-make the tables also
+├── contracts/
+│   └── JewelleryTracker.sol     # Core ERC-721 style provenance contract
+├── scripts/
+│   └── deploy.js                # Contract deployment script for Ganache/Hardhat
+├── backend/
+│   ├── config/
+│   │   └── db.js                # MongoDB connection
+│   ├── controllers/
+│   │   ├── jewelleryController.js
+│   │   └── userController.js
+│   ├── models/
+│   │   ├── Jewellery.js          # Off-chain schema
+│   │   └── User.js               # User roles (Admin, Jeweler, Customer)
+│   ├── routes/
+│   │   ├── jewelleryRoutes.js
+│   │   └── userRoutes.js
+│   ├── middleware/
+│   │   └── auth.js              # JWT / Role authentication
+│   └── server.js                # Express App entry point
+├── frontend/
+│   ├── public/
+│   │   ├── index.html           # Main portal
+│   │   ├── verify.html          # Public verification page
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   └── js/
+│   │       ├── web3App.js       # MetaMask interaction script
+│   │       └── app.js           # REST API fetch calls
+├── package.json
+└── README.md
