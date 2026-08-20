@@ -41,14 +41,14 @@ async function initWeb3() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             userAccount = accounts[0];
             contractInstance = new web3.eth.Contract(contractABI, contractAddress);
-            console.log("Connected to MetaMask:", userAccount);
+            console.log("Connected to Trust Wallet:", userAccount);
             return true;
         } catch(e) {
             console.error("User denied account access");
             return false;
         }
     } else {
-        alert("Please install MetaMask to mint on the blockchain!");
+        alert("Please install Trust Wallet to mint on the blockchain!");
         return false;
     }
 }
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // Mint transaction
                 const btn = mintForm.querySelector('button[type="submit"]');
-                btn.textContent = "Confirming in MetaMask...";
+                btn.textContent = "Confirming in Trust Wallet...";
                 btn.disabled = true;
 
                 const result = await contractInstance.methods.mintJewellery(
