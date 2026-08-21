@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('manufacturer', 'shop', 'customer') NOT NULL DEFAULT 'customer',
     wallet_address VARCHAR(42),
     address TEXT,
+    reset_otp VARCHAR(10) NULL,
+    reset_otp_expiry DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -60,6 +62,8 @@ CREATE TABLE IF NOT EXISTS admins (
     password VARCHAR(255) NOT NULL,
     wallet_address VARCHAR(42),
     address TEXT,
+    reset_otp VARCHAR(10) NULL,
+    reset_otp_expiry DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
