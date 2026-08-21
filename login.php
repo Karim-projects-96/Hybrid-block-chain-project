@@ -73,7 +73,7 @@ if (isset($_GET['role'])) {
             <label>Password</label>
             <input type="password" name="password" class="form-control" required placeholder="Enter your password">
             <div style="text-align: right; margin-top: 0.5rem;">
-                <a href="forgot_password.php" style="color: var(--primary-gold); font-size: 0.9rem;">Forgot Password?</a>
+                <a href="forgot_password.php"  style="color: var(--primary-gold); font-size: 0.9rem;text-decoration:none; ">Forgot Password?</a>
             </div>
         </div>
         <button type="submit" class="btn btn-gold" style="width: 100%; margin-top: 1rem;">Login</button>
