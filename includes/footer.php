@@ -15,8 +15,14 @@
     $root_path = str_replace('\\', '/', dirname(__DIR__));
     $relative_path = str_replace($root_path, '', $script_path);
     $depth = substr_count(trim($relative_path, '/'), '/');
-    $base_url = $depth > 0 ? str_repeat('../', $depth) : '.';
-    $base_url = rtrim($base_url, '/');
+    $base_url = dirname($_SERVER['SCRIPT_NAME']);
+    for ($i = 0; $i < $depth; $i++) {
+        $base_url = dirname($base_url);
+    }
+    $base_url = str_replace('\\', '/', $base_url);
+    if ($base_url === '/') {
+        $base_url = '';
+    }
     ?>
     <script>
         const BASE_URL = "<?php echo $base_url; ?>";
