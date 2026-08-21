@@ -3,8 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start(); 
 }
 // Base URL for links
-$script_path = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
-$root_path = str_replace('\\', '/', dirname(__DIR__));
+$script_path = str_replace('\\', '/', realpath($_SERVER['SCRIPT_FILENAME']));
+$root_path = str_replace('\\', '/', realpath(dirname(__DIR__)));
 $relative_path = str_replace($root_path, '', $script_path);
 $depth = substr_count(trim($relative_path, '/'), '/');
 $base_url = dirname($_SERVER['SCRIPT_NAME']);
