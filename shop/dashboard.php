@@ -63,4 +63,38 @@ $jCount = $conn->query("SELECT count(*) as c FROM jewellery WHERE current_owner_
         </div>
     </div>
 </div>
+<div class="card" style="margin-top: 2rem;">
+    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">My Premium Subscribers</h3>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Plan</th>
+                    <th>Valid Until</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $subSql = "SELECT u.name, u.email, s.plan_name, s.end_date FROM subscriptions s JOIN users u ON s.customer_id = u.id WHERE s.shop_id = $user_id AND s.status = 'active' ORDER BY s.id DESC";
+                $subRes = $conn->query($subSql);
+                if ($subRes && $subRes->num_rows > 0) {
+                    while($s = $subRes->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($s['name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($s['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($s['plan_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars(date('d M Y', strtotime($s['end_date']))) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No active subscribers.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 <?php require_once '../includes/footer.php'; ?>
+
